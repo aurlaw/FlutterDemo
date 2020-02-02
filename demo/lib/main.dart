@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:appcenter/appcenter.dart';
+import 'package:appcenter_analytics/appcenter_analytics.dart';
+import 'package:appcenter_crashes/appcenter_crashes.dart';
+
 
 void main() => runApp(MyApp());
 
+
 class MyApp extends StatelessWidget {
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -43,8 +52,17 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+/*
+    final ios = defaultTargetPlatform == TargetPlatform.iOS;
+    var app_secret = ios ? "iOSGuid" : "AndroidGuid";
+     AppCenter.start(app_secret, [AppCenterAnalytics.id, AppCenterCrashes.id]);
+
+ */
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String _appSecret;
+  String _installId = 'Unknown';
 
   void _incrementCounter() {
     setState(() {
@@ -54,6 +72,29 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+    });
+  }
+
+ _MyHomePageState() {
+    final ios = defaultTargetPlatform == TargetPlatform.iOS;
+    _appSecret = ios ? "dcbd4815-09f1-4dfa-919d-b556a1275882" : "02c4a4e6-a02c-4c6a-9aa4-3c36ce66e8a3";
+  }  
+  @override
+  initState() {
+    super.initState();
+    initPlatformState();
+  }
+  // Platform messages are asynchronous, so we initialize in an async method.
+  initPlatformState() async {
+    await AppCenter.start(
+        _appSecret, [AppCenterAnalytics.id, AppCenterCrashes.id]);
+
+    if (!mounted) return;
+
+    var installId = await AppCenter.installId;
+
+    setState(() {
+      _installId = installId;
     });
   }
 
