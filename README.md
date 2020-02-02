@@ -13,3 +13,9 @@ Follow instructions on Flutter https://flutter.dev/docs/get-started/install
 $ cd demo
 $ flutter run
 ```
+
+
+TODO:
+- Intro to Dart
+- Flutter widgets
+- Navigation
