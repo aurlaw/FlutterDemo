@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:FlutterDemo/randomwords.dart';
 
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
@@ -6,14 +7,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to Flutter'),
-        ),
-        body: Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      home: RandomWords(title: 'Flutter Demo',)
     );
   }
 }
