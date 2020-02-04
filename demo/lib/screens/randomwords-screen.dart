@@ -3,18 +3,18 @@ import 'package:english_words/english_words.dart';
 import 'package:package_info/package_info.dart';
 
 
-class _RandomWordsState extends State<RandomWords> {
+class _RandomWordsScreenState extends State<RandomWordsScreen> {
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
+  final _biggerWhiteFont = const TextStyle(fontSize: 18.0, color: Colors.white);
   final _saved = Set<WordPair>();
   final String title;
-  var _version;
+  String _version;
 
-  _RandomWordsState({
-    this.title
+  _RandomWordsScreenState({
+    @required this.title
   });
-  
-  @override
+    @override
   void initState() {
       super.initState();
         // This is the proper place to make the async calls
@@ -32,7 +32,7 @@ class _RandomWordsState extends State<RandomWords> {
               _version = version;
             });
       });
-  }
+  }  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,39 +100,38 @@ class _RandomWordsState extends State<RandomWords> {
               return ListTile(
                 title: Text(
                   pair.asPascalCase,
-                  style: _biggerFont
+                  style: _biggerWhiteFont
                 ),
               );
             },
           );
           final List<Widget> divided = ListTile.divideTiles(
             context: context,
-            tiles: tiles
+            tiles: tiles,
           ).toList();
 
           return Scaffold(
             appBar: AppBar(
               title: Text('Saved Suggestions')
             ),
-            body: ListView(children: divided),
+            body: Container(color: Colors.blue, child: ListView(children: divided)),
           );
         },
       ),
     );
   }
-
   Future<String> _getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.version;
   }
 }
 
-class RandomWords extends StatefulWidget {
+class RandomWordsScreen extends StatefulWidget {
   final String title;
-  RandomWords({
+  RandomWordsScreen({
     this.title
   });
 
   @override
-  _RandomWordsState createState() => _RandomWordsState(title: title);
+  _RandomWordsScreenState createState() => _RandomWordsScreenState(title: title);
 }
