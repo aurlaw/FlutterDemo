@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/screens/randomwords-screen.dart';
-import 'package:FlutterDemo/screens/placeholder-widget.dart';
-
+import 'package:FlutterDemo/screens/profile-screen.dart';
 
 class _HomeScreenState extends State<HomeScreen> {
    int _currentIndex = 0;
   final List<Widget> _children = [
     RandomWordsScreen(title: "Random Suggestions"),
-    PlaceholderWidget(title: "Profile", color: Colors.blue),
+    ProfileScreen(title: "Profile")
+    // PlaceholderWidget(title: "Profile", color: Colors.blue),
   ];
   @override
   Widget build(BuildContext context) {
@@ -40,5 +40,5 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class HomeScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<StatefulWidget> createState() => _HomeScreenState();
 }

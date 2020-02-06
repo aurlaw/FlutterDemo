@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:package_info/package_info.dart';
-
+import 'package:FlutterDemo/models/suggestions.dart';
+import 'package:meta/meta.dart';
 
 class _RandomWordsScreenState extends State<RandomWordsScreen> {
   final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-  final _biggerWhiteFont = const TextStyle(fontSize: 18.0, color: Colors.white);
+  final _textStyle = const TextStyle(fontSize: 18.0);
   final _saved = Set<WordPair>();
-  final String title;
+  String title;
   String _version;
 
-  _RandomWordsScreenState({
-    @required this.title
-  });
     @override
   void initState() {
-      super.initState();
         // This is the proper place to make the async calls
         // This way they only get called once
 
@@ -32,6 +28,9 @@ class _RandomWordsScreenState extends State<RandomWordsScreen> {
               _version = version;
             });
       });
+      title = widget.title;
+      super.initState();
+
   }  
   @override
   Widget build(BuildContext context) {
@@ -73,7 +72,7 @@ class _RandomWordsScreenState extends State<RandomWordsScreen> {
     return ListTile(
       title: Text(
         pair.asPascalCase,
-        style: _biggerFont,
+        style: _textStyle,
       ),
       trailing: Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
@@ -92,33 +91,10 @@ class _RandomWordsScreenState extends State<RandomWordsScreen> {
   }
 
   void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) {
-          final Iterable<ListTile> tiles = _saved.map(
-            (WordPair pair) {
-              return ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerWhiteFont
-                ),
-              );
-            },
-          );
-          final List<Widget> divided = ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList();
+    var suggestions = Suggestions(title: "Saved Suggestions", items: _saved);
+    Navigator.pushNamed(context, '/saved-suggestions', 
+                          arguments: suggestions );
 
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved Suggestions')
-            ),
-            body: Container(color: Colors.blue, child: ListView(children: divided)),
-          );
-        },
-      ),
-    );
   }
   Future<String> _getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -129,9 +105,9 @@ class _RandomWordsScreenState extends State<RandomWordsScreen> {
 class RandomWordsScreen extends StatefulWidget {
   final String title;
   RandomWordsScreen({
-    this.title
+   @required this.title
   });
 
   @override
-  _RandomWordsScreenState createState() => _RandomWordsScreenState(title: title);
+  State<StatefulWidget> createState() => _RandomWordsScreenState();
 }
