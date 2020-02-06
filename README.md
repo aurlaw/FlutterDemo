@@ -16,6 +16,9 @@ $ flutter run
 
 
 TODO:
-- Intro to Dart
-- Flutter widgets
-- Navigation
+- Firebase
+- Local DB integration
+- REST API integration
+- BLoc pattern
+- Provider pattern
+- Push notifications
