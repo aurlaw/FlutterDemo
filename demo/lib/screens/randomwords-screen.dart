@@ -1,57 +1,47 @@
+import 'package:FlutterDemo/provider/saved-suggestions.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:package_info/package_info.dart';
-import 'package:FlutterDemo/models/suggestions.dart';
 import 'package:meta/meta.dart';
+import 'package:provider/provider.dart';
 
-class _RandomWordsScreenState extends State<RandomWordsScreen> {
+class RandomWordsScreen extends StatelessWidget {
   final _suggestions = <WordPair>[];
   final _textStyle = const TextStyle(fontSize: 18.0);
-  final _saved = Set<WordPair>();
-  String title;
-  String _version;
+  final String title;
 
-    @override
-  void initState() {
-        // This is the proper place to make the async calls
-        // This way they only get called once
-
-        // During development, if you change this code,
-        // you will need to do a full restart instead of just a hot reload
-        
-        // You can't use async/await here,
-        // We can't mark this method as async because of the @override
-      _getVersion().then((version) {
-            // If we need to rebuild the widget with the resulting data,
-            // make sure to use `setState`      
-            setState(() {
-              _version = version;
-            });
-      });
-      title = widget.title;
-      super.initState();
-
-  }  
+  RandomWordsScreen({
+    @required this.title
+  });
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: _buildTitle(),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
+          IconButton(icon: Icon(Icons.list), onPressed: () {
+            _pushSaved(context);
+          }),
         ],
       ),
-      body: _buildSuggestions(),
+      body: _buildSuggestions(context),
     );
   }
-  Text _buildTitle() {
-    if (_version == null) {
-      return new Text(title);
-    } else {
-      return new Text(title + ' ' + _version);
-    }
+  Widget _buildTitle() {
+    return FutureBuilder<String>(
+      future: _getVersion(),
+      builder: (context, snapshot) {
+        String titleStr = title;
+        if(snapshot.hasData) {
+          titleStr += ' ' + snapshot.data;
+        }
+        return Text(titleStr);
+      },
+    );
   }
-  Widget _buildSuggestions() {
+  
+  Widget _buildSuggestions(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, i) {
@@ -62,13 +52,15 @@ class _RandomWordsScreenState extends State<RandomWordsScreen> {
         {
           _suggestions.addAll(generateWordPairs().take(10));
         }
-        return _buildRow(_suggestions[index]);
+        return _buildRow(context, _suggestions[index]);
       },
     );
   }
 
-  Widget _buildRow(WordPair pair) {
-    final bool alreadySaved = _saved.contains(pair);
+  Widget _buildRow(BuildContext context, WordPair pair) {
+    var savedModel = Provider.of<SavedSuggestions>(context); 
+    var alreadySaved = savedModel.containts(pair);
+    
     return ListTile(
       title: Text(
         pair.asPascalCase,
@@ -79,35 +71,22 @@ class _RandomWordsScreenState extends State<RandomWordsScreen> {
         color: alreadySaved ? Colors.red : null,
       ),
       onTap: () {
-        setState(() {
           if(alreadySaved) {
-            _saved.remove(pair);
+            savedModel.remove(pair);
           } else {
-            _saved.add(pair);
+            savedModel.add(pair);
           }
-        });
       },
     );
   }
 
-  void _pushSaved() {
-    var suggestions = Suggestions(title: "Saved Suggestions", items: _saved);
-    Navigator.pushNamed(context, '/saved-suggestions', 
-                          arguments: suggestions );
+  void _pushSaved(BuildContext context) {
+    Navigator.pushNamed(context, '/saved-suggestions'); 
 
   }
+  
   Future<String> _getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.version;
   }
-}
-
-class RandomWordsScreen extends StatefulWidget {
-  final String title;
-  RandomWordsScreen({
-   @required this.title
-  });
-
-  @override
-  State<StatefulWidget> createState() => _RandomWordsScreenState();
 }

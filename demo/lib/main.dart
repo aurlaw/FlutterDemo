@@ -1,8 +1,18 @@
+
+import 'package:FlutterDemo/provider/saved-suggestions.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/screens/home-screen.dart';
 import 'package:FlutterDemo/screens/saved-suggestion-screen.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => SavedSuggestions(),
+      child: MyApp(),
+    )    
+  );
+}
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

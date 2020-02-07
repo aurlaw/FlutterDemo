@@ -1,6 +1,7 @@
+import 'package:FlutterDemo/provider/saved-suggestions.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'package:FlutterDemo/models/suggestions.dart';
+import 'package:provider/provider.dart';
 
 class SavedSuggestionsScreen extends StatelessWidget
 {
@@ -8,9 +9,8 @@ class SavedSuggestionsScreen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-
-    final Suggestions _savedSuggestions = ModalRoute.of(context).settings.arguments;
-    final Iterable<ListTile> tiles = _savedSuggestions.items.map(
+    var savedModel = Provider.of<SavedSuggestions>(context); 
+    final Iterable<ListTile> tiles = savedModel.items.map(
       (WordPair pair) {
         return ListTile(
           title: Text(
@@ -27,7 +27,7 @@ class SavedSuggestionsScreen extends StatelessWidget
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_savedSuggestions.title)
+        title: Text("Saved Suggestions")
       ),
       body: Container(color: Colors.blue, child: ListView(children: rowData)),
     );
