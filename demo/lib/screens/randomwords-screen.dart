@@ -42,6 +42,7 @@ class RandomWordsScreen extends StatelessWidget {
   }
   
   Widget _buildSuggestions(BuildContext context) {
+    var savedModel = Provider.of<SavedSuggestions>(context); 
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, i) {
@@ -52,15 +53,13 @@ class RandomWordsScreen extends StatelessWidget {
         {
           _suggestions.addAll(generateWordPairs().take(10));
         }
-        return _buildRow(context, _suggestions[index]);
+        return _buildRow(context, _suggestions[index], savedModel);
       },
     );
   }
 
-  Widget _buildRow(BuildContext context, WordPair pair) {
-    var savedModel = Provider.of<SavedSuggestions>(context); 
-    var alreadySaved = savedModel.containts(pair);
-    
+  Widget _buildRow(BuildContext context, WordPair pair, SavedSuggestions savedModel) {
+    var alreadySaved = savedModel.contains(pair.asPascalCase);
     return ListTile(
       title: Text(
         pair.asPascalCase,
@@ -70,11 +69,13 @@ class RandomWordsScreen extends StatelessWidget {
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ),
-      onTap: () {
+      onTap: () async {
+        // print(pair.asPascalCase);
+        // print(alreadySaved);
           if(alreadySaved) {
-            savedModel.remove(pair);
+            await savedModel.remove(pair.asPascalCase);
           } else {
-            savedModel.add(pair);
+            await savedModel.add(pair.asPascalCase);
           }
       },
     );

@@ -26,59 +26,53 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, saved, child) {
                     return new Stack(
                       children: <Widget>[
-                        new Icon(Icons.notifications),
-                        new Positioned(
-                          right: 0,
-                          child: new Container(
-                            padding: EdgeInsets.all(1),
-                            decoration: new BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            constraints: BoxConstraints(
-                              minWidth: 12,
-                              minHeight: 12,
-                            ),
-                            child: new Text(
-                              '${saved.items.length}',
-                              style: new TextStyle(
-                                color: Colors.white,
-                                fontSize: 8,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        )
+                        new Icon(Icons.notifications, size: 30),
+                        new Positioned(right: 0, child:_buildBadge(saved.items.length))
                       ],
                     );
                   },
                 )            
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person, size: 30),
             title: Text('Profile')
           )
         ],
      ),            
     );
   }
-/*
-   new BottomNavigationBarItem(
-        title: new Text('Home'),
-        icon: new Stack(
-          children: <Widget>[
-            new Icon(Icons.home),
-            new Positioned(  // draw a red marble
-              top: 0.0,
-              right: 0.0,
-              child: new Icon(Icons.brightness_1, size: 8.0, 
-                color: Colors.redAccent),
-            )
-          ]
-        ),
-      )
+  Widget _buildBadge(int count) {
+    if(count > 0) {
+      return _badged(count);
+    } else {
+      return _empty();
+    }
 
- */
+  }
+  Widget _empty() {
+    return new Container(color: Colors.transparent);
+  }
+  Widget _badged(int count) {
+    return  new Container(
+          padding: EdgeInsets.all(2),
+          decoration: new BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          constraints: BoxConstraints(
+            minWidth: 15,
+            minHeight: 15,
+          ),
+          child: new Text(
+            '$count',
+            style: new TextStyle(
+              color: Colors.white,
+              fontSize: 9,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        );
+  }
 
   void onTabTapped(int index) {
     setState(() {
