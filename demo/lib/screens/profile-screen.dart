@@ -76,3 +76,13 @@ class ProfileScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ProfileStateScreen();
 }
+
+
+/*
+References for sliver:
+https://www.woolha.com/tutorials/flutter-sliverappbar-examples
+https://api.flutter.dev/flutter/material/SliverAppBar-class.html
+https://stackoverflow.com/questions/54973948/is-it-possible-to-use-listview-builder-inside-of-customscrollview
+https://api.flutter.dev/flutter/material/FlexibleSpaceBar-class.html
+
+ */

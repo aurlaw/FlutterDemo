@@ -17,15 +17,44 @@ class RandomWordsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: _buildTitle(),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.list), onPressed: () {
-            _pushSaved(context);
-          }),
-        ],
-      ),
-      body: _buildSuggestions(context),
+          body: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: <Widget>[
+              SliverAppBar(
+                actions: <Widget>[
+                  IconButton(icon: Icon(Icons.list), onPressed: () {
+                    _pushSaved(context);
+                  }),],
+                expandedHeight: 220.0,
+                primary: true,
+                floating: false,
+                pinned: true,
+                snap: false,
+                stretch: true,
+                elevation: 50,
+                centerTitle: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  stretchModes: <StretchMode>[
+                    StretchMode.zoomBackground,
+                    StretchMode.blurBackground,
+                    StretchMode.fadeTitle,
+                  ],                  
+                    centerTitle: true,
+                    title: _buildTitle(),
+                    // background: Container(color:Theme.of(context).primaryColor)
+                   background: Image.network(
+                      'https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/cd40fc54-760c-4190-9f1b-3d07d0870cd9/ireland_waterford_castle.jpg',
+                      fit: BoxFit.cover,
+                      color: Theme.of(context).primaryColor,
+                      colorBlendMode: BlendMode.hardLight,
+                    )
+                  ),
+              ),
+              new SliverList(
+                  delegate: _buildSuggestionsDelete(context)
+              ),
+            ],
+          ),
     );
   }
   Widget _buildTitle() {
@@ -34,29 +63,44 @@ class RandomWordsScreen extends StatelessWidget {
       builder: (context, snapshot) {
         String titleStr = title;
         if(snapshot.hasData) {
-          titleStr += ' ' + snapshot.data;
+          titleStr += ' v.' + snapshot.data;
         }
         return Text(titleStr);
       },
     );
   }
   
-  Widget _buildSuggestions(BuildContext context) {
-    var savedModel = Provider.of<SavedSuggestions>(context); 
-    return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemBuilder: (context, i) {
-        if(i.isOdd) return Divider();
+  // Widget _buildSuggestions(BuildContext context) {
+  //   var savedModel = Provider.of<SavedSuggestions>(context); 
+  //   return ListView.builder(
+  //     padding: const EdgeInsets.all(16.0),
+  //     itemBuilder: (context, i) {
+  //       if(i.isOdd) return Divider();
 
-        final index = i ~/2;
-        if(index >= _suggestions.length)
-        {
-          _suggestions.addAll(generateWordPairs().take(10));
-        }
-        return _buildRow(context, _suggestions[index], savedModel);
-      },
-    );
+  //       final index = i ~/2;
+  //       if(index >= _suggestions.length)
+  //       {
+  //         _suggestions.addAll(generateWordPairs().take(10));
+  //       }
+  //       return _buildRow(context, _suggestions[index], savedModel);
+  //     },
+  //   );
+  // }
+
+  SliverChildDelegate _buildSuggestionsDelete(BuildContext context) {
+    var savedModel = Provider.of<SavedSuggestions>(context); 
+    return SliverChildBuilderDelegate((context, i) {
+      if(i.isOdd) return Divider();
+
+      final index = i ~/2;
+      if(index >= _suggestions.length)
+      {
+        _suggestions.addAll(generateWordPairs().take(10));
+      }
+      return _buildRow(context, _suggestions[index], savedModel);
+    });
   }
+
 
   Widget _buildRow(BuildContext context, WordPair pair, SavedSuggestions savedModel) {
     var alreadySaved = savedModel.contains(pair.asPascalCase);
@@ -91,3 +135,11 @@ class RandomWordsScreen extends StatelessWidget {
     return packageInfo.version;
   }
 }
+/*
+References for sliver:
+https://www.woolha.com/tutorials/flutter-sliverappbar-examples
+https://api.flutter.dev/flutter/material/SliverAppBar-class.html
+https://stackoverflow.com/questions/54973948/is-it-possible-to-use-listview-builder-inside-of-customscrollview
+https://api.flutter.dev/flutter/material/FlexibleSpaceBar-class.html
+
+ */
