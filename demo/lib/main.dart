@@ -1,9 +1,7 @@
-
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/screens/home-screen.dart';
 import 'package:FlutterDemo/screens/saved-suggestion-screen.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 void main() {

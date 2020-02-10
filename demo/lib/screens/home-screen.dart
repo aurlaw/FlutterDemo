@@ -1,4 +1,5 @@
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
+import 'package:FlutterDemo/screens/message-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/screens/randomwords-screen.dart';
 import 'package:FlutterDemo/screens/profile-screen.dart';
@@ -8,7 +9,8 @@ class _HomeScreenState extends State<HomeScreen> {
    int _currentIndex = 0;
   final List<Widget> _children = [
     RandomWordsScreen(title: "Random Suggestions"),
-    ProfileScreen(title: "Profile")
+    ProfileScreen(title: "Profile"),
+    MessageScreen(title: "Messages",)
     // PlaceholderWidget(title: "Profile", color: Colors.blue),
   ];
   @override
@@ -36,6 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person, size: 30),
             title: Text('Profile')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message, size: 30),
+            title: Text('Messages')
           )
         ],
      ),            

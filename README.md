@@ -17,8 +17,5 @@ $ flutter run
 
 TODO:
 - Firebase
-- Local DB integration
 - REST API integration
-- BLoc pattern
-- Provider pattern
 - Push notifications

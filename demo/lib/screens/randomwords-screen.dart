@@ -1,3 +1,4 @@
+import 'package:FlutterDemo/components/sliver-bar-replacement.dart';
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
@@ -9,6 +10,7 @@ class RandomWordsScreen extends StatelessWidget {
   final _suggestions = <WordPair>[];
   final _textStyle = const TextStyle(fontSize: 18.0);
   final String title;
+
 
   RandomWordsScreen({
     @required this.title
@@ -33,6 +35,17 @@ class RandomWordsScreen extends StatelessWidget {
                 stretch: true,
                 elevation: 50,
                 centerTitle: true,
+                title: SliverBarReplacement(builder: (context, visible, extent) {
+                      return AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 500),
+                        transitionBuilder: (Widget child, Animation<double> animation) {
+                          final  offsetAnimation =
+                              Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0)).animate(animation);
+                          return ClipRect(child: SlideTransition(child: child, position: offsetAnimation));
+                        },
+                        child: visible ?  _buildCombinedTitle() : _buildTitle(),
+                      );
+                }),
                 flexibleSpace: FlexibleSpaceBar(
                   stretchModes: <StretchMode>[
                     StretchMode.zoomBackground,
@@ -40,8 +53,9 @@ class RandomWordsScreen extends StatelessWidget {
                     StretchMode.fadeTitle,
                   ],                  
                     centerTitle: true,
-                    title: _buildTitle(),
-                    // background: Container(color:Theme.of(context).primaryColor)
+                    title: SliverBarReplacement(builder: (context, visible, extent) {
+                        return Visibility(child: _buildSubtitle(), visible: !visible);
+                    }),
                    background: Image.network(
                       'https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/cd40fc54-760c-4190-9f1b-3d07d0870cd9/ireland_waterford_castle.jpg',
                       fit: BoxFit.cover,
@@ -58,35 +72,35 @@ class RandomWordsScreen extends StatelessWidget {
     );
   }
   Widget _buildTitle() {
+      return Text(title);
+  }
+
+  Widget _buildSubtitle() {
+    return FutureBuilder<String>(
+      future: _getVersion(),
+      builder: (context, snapshot) {
+        String titleStr = '';
+        if(snapshot.hasData) {
+          titleStr += 'Flutter Demo ' + snapshot.data;
+        }
+        return Text(titleStr, style: _textStyle,);
+      },
+    );
+  }
+  Widget _buildCombinedTitle() {
     return FutureBuilder<String>(
       future: _getVersion(),
       builder: (context, snapshot) {
         String titleStr = title;
         if(snapshot.hasData) {
-          titleStr += ' v.' + snapshot.data;
+          titleStr += '-' + snapshot.data;
         }
         return Text(titleStr);
       },
     );
+
   }
   
-  // Widget _buildSuggestions(BuildContext context) {
-  //   var savedModel = Provider.of<SavedSuggestions>(context); 
-  //   return ListView.builder(
-  //     padding: const EdgeInsets.all(16.0),
-  //     itemBuilder: (context, i) {
-  //       if(i.isOdd) return Divider();
-
-  //       final index = i ~/2;
-  //       if(index >= _suggestions.length)
-  //       {
-  //         _suggestions.addAll(generateWordPairs().take(10));
-  //       }
-  //       return _buildRow(context, _suggestions[index], savedModel);
-  //     },
-  //   );
-  // }
-
   SliverChildDelegate _buildSuggestionsDelete(BuildContext context) {
     var savedModel = Provider.of<SavedSuggestions>(context); 
     return SliverChildBuilderDelegate((context, i) {
@@ -114,8 +128,6 @@ class RandomWordsScreen extends StatelessWidget {
         color: alreadySaved ? Colors.red : null,
       ),
       onTap: () async {
-        // print(pair.asPascalCase);
-        // print(alreadySaved);
           if(alreadySaved) {
             await savedModel.remove(pair.asPascalCase);
           } else {
@@ -132,7 +144,7 @@ class RandomWordsScreen extends StatelessWidget {
   
   Future<String> _getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    return packageInfo.version;
+    return '${packageInfo.version}(${packageInfo.buildNumber})';
   }
 }
 /*
