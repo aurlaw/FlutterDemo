@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class MessageScreen extends StatelessWidget {
   final String title;
@@ -17,6 +18,5 @@ class MessageScreen extends StatelessWidget {
 }
 
 /*
-https://stackoverflow.com/questions/50706500/flutter-how-to-make-an-array-with-the-json-data
-
+https://medium.com/@ezra_69528/flutter-pinterest-style-photo-grids-b99289584b71
  */
