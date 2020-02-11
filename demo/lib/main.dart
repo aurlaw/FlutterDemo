@@ -1,4 +1,5 @@
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
+import 'package:FlutterDemo/screens/message-detail-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/screens/home-screen.dart';
 import 'package:FlutterDemo/screens/saved-suggestion-screen.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
         ),
       home: HomeScreen(),
       routes: {
-        '/saved-suggestions': (context) => SavedSuggestionsScreen()
+        '/saved-suggestions': (context) => SavedSuggestionsScreen(),
+        '/message-detail': (context) => MessageDetailScreen()
       },
     );
   }
