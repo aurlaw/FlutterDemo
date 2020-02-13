@@ -17,5 +17,4 @@ $ flutter run
 
 TODO:
 - Firebase
-- REST API integration
 - Push notifications

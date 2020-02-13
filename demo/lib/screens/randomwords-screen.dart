@@ -1,5 +1,8 @@
 import 'package:FlutterDemo/components/sliver-bar-replacement.dart';
+import 'package:FlutterDemo/models/analytics-args.dart';
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:package_info/package_info.dart';
@@ -10,6 +13,9 @@ class RandomWordsScreen extends StatelessWidget {
   final _suggestions = <WordPair>[];
   final _textStyle = const TextStyle(fontSize: 18.0);
   final String title;
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);  
 
 
   RandomWordsScreen({
@@ -128,20 +134,40 @@ class RandomWordsScreen extends StatelessWidget {
         color: alreadySaved ? Colors.red : null,
       ),
       onTap: () async {
+          var word = pair.asPascalCase;
           if(alreadySaved) {
-            await savedModel.remove(pair.asPascalCase);
+            await savedModel.remove(word);
+            await _sendRemoveEvent(word);
           } else {
-            await savedModel.add(pair.asPascalCase);
+            await savedModel.add(word);
+            await _sendSaveEvent(word);
           }
       },
     );
   }
 
   void _pushSaved(BuildContext context) {
-    Navigator.pushNamed(context, '/saved-suggestions'); 
-
+    Navigator.pushNamed(context, '/saved-suggestions', arguments: AnalyticsArgs(analytics, observer)); 
+    observer.analytics.setCurrentScreen(
+      screenName: '/saved-suggestions',
+    );
   }
-  
+   Future<void> _sendSaveEvent(String word) async {
+    await analytics.logEvent(
+      name: 'save_suggestion',
+      parameters: <String, dynamic>{
+        'word': word
+      },
+    );
+  }
+   Future<void> _sendRemoveEvent(String word) async {
+    await analytics.logEvent(
+      name: 'remove_suggestion',
+      parameters: <String, dynamic>{
+        'word': word
+      },
+    );
+  }  
   Future<String> _getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return '${packageInfo.version}(${packageInfo.buildNumber})';
