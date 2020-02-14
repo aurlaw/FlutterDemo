@@ -14,6 +14,10 @@ $ cd demo
 $ flutter run
 ```
 
+Quick Trick
+
+If iOS build fails with cocoapods. Delete Podfile and Podfile.lock. Re-run `flutter pub get` to regenerate pod files.
+
 
 TODO:
 - Firebase
