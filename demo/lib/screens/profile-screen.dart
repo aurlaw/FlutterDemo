@@ -1,8 +1,10 @@
+import 'package:FlutterDemo/provider/remote-config.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/models/user.dart';
 import 'package:FlutterDemo/data/user-repository.dart';
 import 'package:FlutterDemo/bloc/user-bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:provider/provider.dart';
 
 class _ProfileStateScreen extends State<ProfileScreen> {
   final _textStyle = const TextStyle(fontSize: 36.0);
@@ -31,23 +33,29 @@ class _ProfileStateScreen extends State<ProfileScreen> {
                 if (snapshot.data is UserLoadingState) {
                   return _buildLoading();
                 }
-                // if(snapshot.data is UserInitState) {
-                //   return _buildInit();
-                // }
-                return _buildInit();
+                return _buildInit(context);
               })),
     );
   }
 
-  Widget _buildInit() {
+  Widget _buildInit(BuildContext context) {
+
     return Center(
         child: RaisedButton(
-      // textTheme: Theme.of(context).buttonTheme.textTheme,
-      child: Text(_title),
+      child: _getButtonTitle(context),
       onPressed: () {
         _userBloc.loadUserData();
       },
     ));
+  }
+
+  Widget _getButtonTitle(BuildContext context) {
+    return new Consumer<RemoteConfiguration>(
+      builder: (context, config, child) {
+        var title = config.getProfileMessage();
+        return Text(title != null ? title : _title);
+      },
+    );
   }
 
   Widget _buildContent(User user) {

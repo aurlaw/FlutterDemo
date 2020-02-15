@@ -83,8 +83,10 @@ class _ImageTile extends StatelessWidget {
       elevation: 3.0,
       child: new GestureDetector(
         onTap: () {
-          print(message.content);
-          Navigator.pushNamed(context, AppConstants.of(context).messageDetailRoute, arguments: message);
+          // print(message.content);
+          Navigator.pushNamed(
+              context, AppConstants.of(context).messageDetailRoute,
+              arguments: message);
         },
         child: new Container(
             decoration: new BoxDecoration(

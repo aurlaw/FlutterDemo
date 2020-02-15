@@ -22,17 +22,13 @@ void main() async {
   // Pass all uncaught errors from the framework to Crashlytics.
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
-  final RemoteConfig remoteConfig = await RemoteConfig.instance;
-
-  runApp(MultiProvider(
-    providers: [
-      Provider<SavedSuggestions>(create: (context) => SavedSuggestions()),
-      Provider<RemoteConfiguration>(create: (context) => RemoteConfiguration(remoteConfig: remoteConfig))
-    ],
-    child: AppConstants(child: MyApp())
-  ));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<SavedSuggestions>(
+        create: (context) => SavedSuggestions()),
+    ChangeNotifierProvider<RemoteConfiguration>(
+        create: (context) => RemoteConfiguration())
+  ], child: AppConstants(child: MyApp())));
 }
-
 
 class MyApp extends StatelessWidget {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
@@ -52,22 +48,11 @@ class MyApp extends StatelessWidget {
               buttonColor: Color.fromARGB(255, 56, 28, 94))),
       home: HomeScreen(analytics: analytics, observer: observer),
       routes: {
-        AppConstants.of(context).savedSuggestionRoute: (context) => SavedSuggestionsScreen(),
-        AppConstants.of(context).messageDetailRoute: (context) => MessageDetailScreen()
+        AppConstants.of(context).savedSuggestionRoute: (context) =>
+            SavedSuggestionsScreen(),
+        AppConstants.of(context).messageDetailRoute: (context) =>
+            MessageDetailScreen()
       },
     );
   }
 }
-/*
-return FutureBuilder<String>(
-      future: _getVersion(),
-      builder: (context, snapshot) {
-        String titleStr = title;
-        if(snapshot.hasData) {
-          titleStr += ' ' + snapshot.data;
-        }
-        return Text(titleStr);
-      },
-    );
-
- */
