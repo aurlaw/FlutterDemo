@@ -29,9 +29,9 @@ class UserState {
   factory UserState._userLoading() = UserLoadingState;
 }
 
-class UserInitState extends UserState{}
+class UserInitState extends UserState {}
 
-class UserLoadingState extends UserState{}
+class UserLoadingState extends UserState {}
 
 class UserDataState extends UserState {
   final User user;

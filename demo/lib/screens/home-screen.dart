@@ -12,78 +12,77 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   final FirebaseAnalyticsObserver observer;
 
   _HomeScreenState({this.analytics, this.observer});
-   int _currentIndex = 0;
+  int _currentIndex = 0;
   final List<Widget> _children = [
     RandomWordsScreen(title: "Random Suggestions"),
     ProfileScreen(title: "Profile"),
-    MessageScreen(title: "Messages",)
+    MessageScreen(
+      title: "Messages",
+    )
     // PlaceholderWidget(title: "Profile", color: Colors.blue),
   ];
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex, 
+        currentIndex: _currentIndex,
         onTap: onTabTapped,
         items: [
           BottomNavigationBarItem(
-            title: new Text('Suggestions'),
-            icon: 
-                Consumer<SavedSuggestions>(
-                  builder: (context, saved, child) {
-                    return new Stack(
-                      children: <Widget>[
-                        new Icon(Icons.notifications, size: 30),
-                        new Positioned(right: 0, child:_buildBadge(saved.items.length))
-                      ],
-                    );
-                  },
-                )            
-          ),
+              title: new Text('Suggestions'),
+              icon: Consumer<SavedSuggestions>(
+                builder: (context, saved, child) {
+                  return new Stack(
+                    children: <Widget>[
+                      new Icon(Icons.notifications, size: 30),
+                      new Positioned(
+                          right: 0, child: _buildBadge(saved.items.length))
+                    ],
+                  );
+                },
+              )),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 30),
-            title: Text('Profile')
-          ),
+              icon: Icon(Icons.person, size: 30), title: Text('Profile')),
           BottomNavigationBarItem(
-            icon: Icon(Icons.message, size: 30),
-            title: Text('Messages')
-          )
+              icon: Icon(Icons.message, size: 30), title: Text('Messages'))
         ],
-     ),            
+      ),
     );
   }
+
   Widget _buildBadge(int count) {
-    if(count > 0) {
+    if (count > 0) {
       return _badged(count);
     } else {
       return _empty();
     }
-
   }
+
   Widget _empty() {
     return new Container(color: Colors.transparent);
   }
+
   Widget _badged(int count) {
-    return  new Container(
-          padding: EdgeInsets.all(2),
-          decoration: new BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          constraints: BoxConstraints(
-            minWidth: 15,
-            minHeight: 15,
-          ),
-          child: new Text(
-            '$count',
-            style: new TextStyle(
-              color: Colors.white,
-              fontSize: 9,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        );
+    return new Container(
+      padding: EdgeInsets.all(2),
+      decoration: new BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      constraints: BoxConstraints(
+        minWidth: 15,
+        minHeight: 15,
+      ),
+      child: new Text(
+        '$count',
+        style: new TextStyle(
+          color: Colors.white,
+          fontSize: 9,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 
   void onTabTapped(int index) {
@@ -92,13 +91,15 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
       _sendCurrentTabToAnalytics();
     });
   }
- void _sendCurrentTabToAnalytics() {
+
+  void _sendCurrentTabToAnalytics() {
     observer.analytics.setCurrentScreen(
       screenName: 'HomeScreen/$_currentIndex',
     );
     print('screen event sent');
   }
- @override
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     observer.subscribe(this, ModalRoute.of(context));
@@ -109,16 +110,15 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
     observer.unsubscribe(this);
     super.dispose();
   }
-
 }
 
 class HomeScreen extends StatefulWidget {
-
   final FirebaseAnalytics analytics;
   final FirebaseAnalyticsObserver observer;
 
   HomeScreen({this.analytics, this.observer});
 
   @override
-  State<StatefulWidget> createState() => _HomeScreenState(analytics: analytics, observer: observer);
+  State<StatefulWidget> createState() =>
+      _HomeScreenState(analytics: analytics, observer: observer);
 }

@@ -5,23 +5,24 @@ import 'package:collection/collection.dart';
 
 class SavedSuggestions extends ChangeNotifier {
   /// Internal, private state of the model.
-  Set<String> _items =   Set<String>();
+  Set<String> _items = Set<String>();
   final SuggestionsRepository _repository = SuggestionsRepository();
+
   /// An unmodifiable view of the items in the model.
   UnmodifiableSetView<String> get items => UnmodifiableSetView(_items);
-  
+
   SavedSuggestions() {
-     load();
+    load();
   }
 
-  Future load() async{
+  Future load() async {
     var items = await _repository.getAll();
-    if(items.length > 0) {
+    if (items.length > 0) {
       items.forEach((name) => _items.add(name));
     }
     notifyListeners();
-
   }
+
   /// Adds [word] to list.
   Future add(String word) async {
     _items.add(word);
@@ -29,6 +30,7 @@ class SavedSuggestions extends ChangeNotifier {
     // This call tells the widgets that are listening to this model to rebuild.
     notifyListeners();
   }
+
   /// removes [word] to list.
   Future remove(String word) async {
     _items.remove(word);

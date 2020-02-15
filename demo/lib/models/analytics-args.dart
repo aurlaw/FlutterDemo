@@ -8,7 +8,6 @@ class AnalyticsArgs {
   AnalyticsArgs(this.analytics, this.observer);
 }
 
-
 /**
  * 
  *   static FirebaseAnalytics analytics = FirebaseAnalytics();

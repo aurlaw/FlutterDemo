@@ -14,47 +14,45 @@ class _ProfileStateScreen extends State<ProfileScreen> {
     _title = widget.title;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile User')),
       body: SafeArea(
-        child: StreamBuilder<UserState>(
-          stream: _userBloc.user,
-          initialData: UserInitState(),
-          builder: (context, snapshot) {
-            if(snapshot.data is UserDataState) {
-              UserDataState state = snapshot.data;
-              return _buildContent(state.user);
-            }
-            if(snapshot.data is UserLoadingState) {
-              return _buildLoading();
-            }
-            // if(snapshot.data is UserInitState) {
-            //   return _buildInit();
-            // }
-              return _buildInit();
-          })
-        ),
+          child: StreamBuilder<UserState>(
+              stream: _userBloc.user,
+              initialData: UserInitState(),
+              builder: (context, snapshot) {
+                if (snapshot.data is UserDataState) {
+                  UserDataState state = snapshot.data;
+                  return _buildContent(state.user);
+                }
+                if (snapshot.data is UserLoadingState) {
+                  return _buildLoading();
+                }
+                // if(snapshot.data is UserInitState) {
+                //   return _buildInit();
+                // }
+                return _buildInit();
+              })),
     );
   }
 
   Widget _buildInit() {
-    return Center(child: RaisedButton(
+    return Center(
+        child: RaisedButton(
       // textTheme: Theme.of(context).buttonTheme.textTheme,
       child: Text(_title),
       onPressed: () {
         _userBloc.loadUserData();
       },
-      )
-    );
+    ));
   }
 
   Widget _buildContent(User user) {
-    return Center(child: Text(
-        'Welcome ${user.name} ${user.surname}',
-        style: _textStyle
-      ));
+    return Center(
+        child: Text('Welcome ${user.name} ${user.surname}', style: _textStyle));
   }
 
   Widget _buildLoading() {
@@ -73,11 +71,9 @@ class ProfileScreen extends StatefulWidget {
   final String title;
   ProfileScreen({@required this.title});
 
-
   @override
   State<StatefulWidget> createState() => _ProfileStateScreen();
 }
-
 
 /*
 References for sliver:
