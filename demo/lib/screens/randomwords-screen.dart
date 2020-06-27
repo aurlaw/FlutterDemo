@@ -68,10 +68,10 @@ class RandomWordsScreen extends StatelessWidget {
                   return Visibility(child: _buildSubtitle(), visible: !visible);
                 }),
                 background: Image.network(
-                  'https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/cd40fc54-760c-4190-9f1b-3d07d0870cd9/ireland_waterford_castle.jpg',
+                  'https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/57b4ba67-3d7b-4960-9a64-2785329a2816/gustav_patio.jpg',
                   fit: BoxFit.cover,
                   color: Theme.of(context).primaryColor,
-                  colorBlendMode: BlendMode.hardLight,
+                  colorBlendMode: BlendMode.colorDodge,
                 )),
           ),
           new SliverList(delegate: _buildSuggestionsDelete(context)),

@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: Color.fromARGB(255, 16, 82, 33),
           accentColor: Color.fromARGB(255, 56, 28, 94),
+          secondaryHeaderColor: Color.fromARGB(200, 0,71,117),
           buttonTheme: ButtonThemeData(
               textTheme: ButtonTextTheme.primary,
               padding: EdgeInsets.all(16.0),
