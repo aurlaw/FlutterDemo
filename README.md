@@ -22,3 +22,5 @@ If iOS build fails with cocoapods. Delete Podfile and Podfile.lock. Re-run `flut
 TODO:
 - Firebase
 - Push notifications
+
+https://pub.dev/packages/flutter_launcher_icons
