@@ -29,8 +29,8 @@ class MessageDetailScreen extends StatelessWidget {
                   Image.network(message.imageUrl),
                   Html(
                     data: content,
-                    defaultTextStyle: _textStyle,
-                    padding: EdgeInsets.all(8.0),
+                    // defaultTextStyle: _textStyle,
+                    // padding: EdgeInsets.all(8.0),
                   )
                   // Text(message.content, style: _textStyle)
                 ],
