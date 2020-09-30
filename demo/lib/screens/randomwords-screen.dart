@@ -2,6 +2,7 @@ import 'package:FlutterDemo/app-constants.dart';
 import 'package:FlutterDemo/components/sliver-bar-replacement.dart';
 import 'package:FlutterDemo/models/analytics-args.dart';
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
+import 'package:FlutterDemo/provider/remote-config.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ class RandomWordsScreen extends StatelessWidget {
   final _suggestions = <WordPair>[];
   final _textStyle = const TextStyle(fontSize: 18.0);
   final String title;
+  final String _defaultImage =
+      "https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/cd40fc54-760c-4190-9f1b-3d07d0870cd9/ireland_waterford_castle.jpg";
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
@@ -57,26 +60,41 @@ class RandomWordsScreen extends StatelessWidget {
               );
             }),
             flexibleSpace: FlexibleSpaceBar(
-                stretchModes: <StretchMode>[
-                  StretchMode.zoomBackground,
-                  StretchMode.blurBackground,
-                  StretchMode.fadeTitle,
-                ],
-                centerTitle: true,
-                title:
-                    SliverBarReplacement(builder: (context, visible, extent) {
-                  return Visibility(child: _buildSubtitle(), visible: !visible);
-                }),
-                background: Image.network(
-                  'https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/cd40fc54-760c-4190-9f1b-3d07d0870cd9/ireland_waterford_castle.jpg',
-                  fit: BoxFit.cover,
-                  color: Theme.of(context).primaryColor,
-                  colorBlendMode: BlendMode.colorDodge,
-                )),
+              stretchModes: <StretchMode>[
+                StretchMode.zoomBackground,
+                StretchMode.blurBackground,
+                StretchMode.fadeTitle,
+              ],
+              centerTitle: true,
+              title: SliverBarReplacement(builder: (context, visible, extent) {
+                return Visibility(child: _buildSubtitle(), visible: !visible);
+              }),
+              // background: Image.network(
+              //   'https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/cd40fc54-760c-4190-9f1b-3d07d0870cd9/ireland_waterford_castle.jpg',
+              //   fit: BoxFit.cover,
+              //   color: Theme.of(context).primaryColor,
+              //   colorBlendMode: BlendMode.colorDodge,
+              // )
+              background: _getImage(context),
+            ),
           ),
           new SliverList(delegate: _buildSuggestionsDelete(context)),
         ],
       ),
+    );
+  }
+
+  Widget _getImage(BuildContext context) {
+    return new Consumer<RemoteConfiguration>(
+      builder: (context, config, child) {
+        var headerImg = config.getHeaderImage();
+        return Image.network(
+          headerImg != null ? headerImg : _defaultImage,
+          fit: BoxFit.cover,
+          color: Theme.of(context).primaryColor,
+          colorBlendMode: BlendMode.colorDodge,
+        );
+      },
     );
   }
 

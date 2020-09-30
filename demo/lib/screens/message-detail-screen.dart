@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class MessageDetailScreen extends StatelessWidget {
-  final _textStyle = const TextStyle(
-      fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.w500);
+  // final _textStyle = const TextStyle(
+  //     fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.w500);
 
   MessageDetailScreen();
 

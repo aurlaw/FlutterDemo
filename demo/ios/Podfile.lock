@@ -17,12 +17,8 @@ PODS:
     - Firebase/CoreOnly (~> 6.26.0)
     - firebase_core
     - Flutter
-  - firebase_analytics_web (0.1.0):
-    - Flutter
   - firebase_core (0.5.0):
     - Firebase/CoreOnly (~> 6.26.0)
-    - Flutter
-  - firebase_core_web (0.1.0):
     - Flutter
   - firebase_crashlytics (0.2.0):
     - Firebase/CoreOnly (~> 6.26.0)
@@ -127,8 +123,6 @@ PODS:
     - FMDB (~> 2.7.2)
   - video_player (0.0.1):
     - Flutter
-  - video_player_web (0.0.1):
-    - Flutter
   - wakelock (0.0.1):
     - Flutter
   - webview_flutter (0.0.1):
@@ -136,9 +130,7 @@ PODS:
 
 DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
-  - firebase_analytics_web (from `.symlinks/plugins/firebase_analytics_web/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
@@ -146,7 +138,6 @@ DEPENDENCIES:
   - screen (from `.symlinks/plugins/screen/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
-  - video_player_web (from `.symlinks/plugins/video_player_web/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
@@ -174,12 +165,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
-  firebase_analytics_web:
-    :path: ".symlinks/plugins/firebase_analytics_web/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
-  firebase_core_web:
-    :path: ".symlinks/plugins/firebase_core_web/ios"
   firebase_crashlytics:
     :path: ".symlinks/plugins/firebase_crashlytics/ios"
   firebase_remote_config:
@@ -194,8 +181,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   video_player:
     :path: ".symlinks/plugins/video_player/ios"
-  video_player_web:
-    :path: ".symlinks/plugins/video_player_web/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
   webview_flutter:
@@ -204,9 +189,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
   firebase_analytics: 3ad65aa7be059752b2c1a6392bfafe030b4ab9fa
-  firebase_analytics_web: 7d539061ea4af07563a0e21044af89cab70efec0
   firebase_core: 3134fe79d257d430f163b558caf52a10a87efe8a
-  firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
   firebase_crashlytics: df7effe1815efa16629d2580ec4ca5f49a4af10d
   firebase_remote_config: d593fc7402e689b6f6337d7d69028be008ee8c03
   FirebaseABTesting: 821a3a3e4a145987e80fee3657c4de1cb9adf693
@@ -231,10 +214,9 @@ SPEC CHECKSUMS:
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
-  video_player_web: da8cadb8274ed4f8dbee8d7171b420dedd437ce7
   wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
-PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
 COCOAPODS: 1.8.4

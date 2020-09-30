@@ -10,8 +10,8 @@ import 'package:FlutterDemo/screens/home-screen.dart';
 import 'package:FlutterDemo/screens/saved-suggestion-screen.dart';
 // import 'package:path/path.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
+// import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// import 'package:flutter/foundation.dart' show kDebugMode;
 
 void main() async {
   // if (kDebugMode) {

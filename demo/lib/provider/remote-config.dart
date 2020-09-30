@@ -29,4 +29,8 @@ class RemoteConfiguration extends ChangeNotifier {
     // print('getProfileMessage');
     return remoteConfig?.getString("profile_message");
   }
+
+  String getHeaderImage() {
+    return remoteConfig?.getString("header_image");
+  }
 }
