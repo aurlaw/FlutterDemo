@@ -1,10 +1,12 @@
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
 import 'package:FlutterDemo/screens/message-screen.dart';
+import 'package:FlutterDemo/screens/settings-screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/screens/randomwords-screen.dart';
 import 'package:FlutterDemo/screens/profile-screen.dart';
+
 import 'package:provider/provider.dart';
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware {
@@ -16,9 +18,8 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   final List<Widget> _children = [
     RandomWordsScreen(title: "Random Suggestions"),
     ProfileScreen(title: "Profile"),
-    MessageScreen(
-      title: "Messages",
-    )
+    MessageScreen(title: "Messages"),
+    SettingsScreen(title: "Settings")
     // PlaceholderWidget(title: "Profile", color: Colors.blue),
   ];
   @override
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
+        type: BottomNavigationBarType.fixed,
         onTap: onTabTapped,
         items: [
           BottomNavigationBarItem(
@@ -45,7 +47,9 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
           BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 30), title: Text('Profile')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.message, size: 30), title: Text('Messages'))
+              icon: Icon(Icons.message, size: 30), title: Text('Messages')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings, size: 30), title: Text("Settings"))
         ],
       ),
     );
