@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
         onTap: onTabTapped,
         items: [
           BottomNavigationBarItem(
-              title: new Text('Suggestions'),
+              label: "Suggestions",
               icon: Consumer<SavedSuggestions>(
                 builder: (context, saved, child) {
                   return new Stack(
@@ -45,11 +45,11 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 },
               )),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person, size: 30), title: Text('Profile')),
+              icon: Icon(Icons.person, size: 30), label: "Profile"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.message, size: 30), title: Text('Messages')),
+              icon: Icon(Icons.message, size: 30), label: "Messages"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.settings, size: 30), title: Text("Settings"))
+              icon: Icon(Icons.settings, size: 30), label: "Settings")
         ],
       ),
     );

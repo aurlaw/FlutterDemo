@@ -1,4 +1,5 @@
 import 'package:FlutterDemo/app-constants.dart';
+import 'package:FlutterDemo/provider/native-provider.dart';
 import 'package:FlutterDemo/provider/remote-config.dart';
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
 import 'package:FlutterDemo/screens/message-detail-screen.dart';
@@ -8,6 +9,7 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/screens/home-screen.dart';
 import 'package:FlutterDemo/screens/saved-suggestion-screen.dart';
+// import 'package:path/path.dart';
 // import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 // import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -38,7 +40,9 @@ void main() async {
     ChangeNotifierProvider<SavedSuggestions>(
         create: (context) => SavedSuggestions()),
     ChangeNotifierProvider<RemoteConfiguration>(
-        create: (context) => RemoteConfiguration())
+        create: (context) => RemoteConfiguration()),
+    ChangeNotifierProvider<NativeProvider>(
+        create: (context) => NativeProvider())
   ], child: AppConstants(child: MyApp())));
 }
 
