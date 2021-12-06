@@ -1,6 +1,6 @@
-import 'package:FlutterDemo/models/analytics-args.dart';
+// import 'package:FlutterDemo/models/analytics-args.dart';
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
 // import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 // import 'package:english_words/english_words.dart';
@@ -12,8 +12,8 @@ class SavedSuggestionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AnalyticsArgs args = ModalRoute.of(context).settings.arguments;
-    final analytics = args.analytics;
+    // final AnalyticsArgs args = ModalRoute.of(context).settings.arguments;
+    // final analytics = args.analytics;
 
     var savedModel = Provider.of<SavedSuggestions>(context);
     final Iterable<ListTile> tiles = savedModel.items.map(
@@ -22,7 +22,7 @@ class SavedSuggestionsScreen extends StatelessWidget {
           title: Text(item, style: _textStyle),
           onTap: () async {
             await savedModel.remove(item);
-            await _sendRemoveEvent(analytics, item);
+            // await _sendRemoveEvent(analytics, item);
           },
         );
       },
@@ -40,11 +40,11 @@ class SavedSuggestionsScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _sendRemoveEvent(
-      FirebaseAnalytics analytics, String word) async {
-    await analytics?.logEvent(
-      name: 'remove_suggestion',
-      parameters: <String, dynamic>{'word': word},
-    );
-  }
+  // Future<void> _sendRemoveEvent(
+  //     FirebaseAnalytics analytics, String word) async {
+  //   await analytics?.logEvent(
+  //     name: 'remove_suggestion',
+  //     parameters: <String, dynamic>{'word': word},
+  //   );
+  // }
 }

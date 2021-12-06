@@ -11,7 +11,7 @@ class MessageDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Message message = ModalRoute.of(context).settings.arguments;
-    String content = "";
+    dynamic content = "";
     if (message.title != null) {
       content = "<h1>${message.title}</h1>";
     }

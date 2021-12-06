@@ -3,7 +3,8 @@ import 'package:FlutterDemo/models/message.dart';
 import 'package:http/http.dart' as http;
 
 class MessageService {
-  final String _endpoint = "https://display.gatesmanagency.com/api/message";
+  final Uri _endpoint =
+      Uri.parse("https://display.gatesmanagency.com/api/message");
   MessageService();
 
   Future<List<Message>> getMessages() async {

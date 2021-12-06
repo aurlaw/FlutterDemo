@@ -1,8 +1,8 @@
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
 import 'package:FlutterDemo/screens/message-screen.dart';
 import 'package:FlutterDemo/screens/settings-screen.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/screens/randomwords-screen.dart';
 import 'package:FlutterDemo/screens/profile-screen.dart';
@@ -10,10 +10,10 @@ import 'package:FlutterDemo/screens/profile-screen.dart';
 import 'package:provider/provider.dart';
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware {
-  final FirebaseAnalytics analytics;
-  final FirebaseAnalyticsObserver observer;
+  // final FirebaseAnalytics analytics;
+  // final FirebaseAnalyticsObserver observer;
 
-  _HomeScreenState({this.analytics, this.observer});
+  _HomeScreenState();
   int _currentIndex = 0;
   final List<Widget> _children = [
     RandomWordsScreen(title: "Random Suggestions"),
@@ -97,32 +97,31 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   }
 
   void _sendCurrentTabToAnalytics() {
-    observer.analytics.setCurrentScreen(
-      screenName: 'HomeScreen/$_currentIndex',
-    );
+    // observer.analytics.setCurrentScreen(
+    //   screenName: 'HomeScreen/$_currentIndex',
+    // );
     print('screen event sent');
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    observer.subscribe(this, ModalRoute.of(context));
+    // observer.subscribe(this, ModalRoute.of(context));
   }
 
   @override
   void dispose() {
-    observer.unsubscribe(this);
+    // observer.unsubscribe(this);
     super.dispose();
   }
 }
 
 class HomeScreen extends StatefulWidget {
-  final FirebaseAnalytics analytics;
-  final FirebaseAnalyticsObserver observer;
+  // final FirebaseAnalytics analytics;
+  // final FirebaseAnalyticsObserver observer;
 
-  HomeScreen({this.analytics, this.observer});
+  HomeScreen();
 
   @override
-  State<StatefulWidget> createState() =>
-      _HomeScreenState(analytics: analytics, observer: observer);
+  State<StatefulWidget> createState() => _HomeScreenState();
 }

@@ -1,4 +1,4 @@
-import 'package:FlutterDemo/provider/remote-config.dart';
+// import 'package:FlutterDemo/provider/remote-config.dart';
 import 'package:flutter/material.dart';
 import 'package:FlutterDemo/models/user.dart';
 import 'package:FlutterDemo/data/user-repository.dart';
@@ -39,24 +39,23 @@ class _ProfileStateScreen extends State<ProfileScreen> {
   }
 
   Widget _buildInit(BuildContext context) {
-
     return Center(
         child: RaisedButton(
-      child: _getButtonTitle(context),
+      child: Text(_title),
       onPressed: () {
         _userBloc.loadUserData();
       },
     ));
   }
 
-  Widget _getButtonTitle(BuildContext context) {
-    return new Consumer<RemoteConfiguration>(
-      builder: (context, config, child) {
-        var title = config.getProfileMessage();
-        return Text(title != null ? title : _title);
-      },
-    );
-  }
+  // Widget _getButtonTitle(BuildContext context) {
+  //   return new Consumer<RemoteConfiguration>(
+  //     builder: (context, config, child) {
+  //       var title = config.getProfileMessage();
+  //       return Text(title != null ? title : _title);
+  //     },
+  //   );
+  // }
 
   Widget _buildContent(User user) {
     return Center(

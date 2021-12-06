@@ -1,10 +1,10 @@
 import 'package:FlutterDemo/app-constants.dart';
 import 'package:FlutterDemo/components/sliver-bar-replacement.dart';
-import 'package:FlutterDemo/models/analytics-args.dart';
+// import 'package:FlutterDemo/models/analytics-args.dart';
 import 'package:FlutterDemo/provider/saved-suggestions.dart';
-import 'package:FlutterDemo/provider/remote-config.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
+// import 'package:FlutterDemo/provider/remote-config.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:package_info/package_info.dart';
@@ -17,9 +17,9 @@ class RandomWordsScreen extends StatelessWidget {
   final String title;
   final String _defaultImage =
       "https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/cd40fc54-760c-4190-9f1b-3d07d0870cd9/ireland_waterford_castle.jpg";
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
+  // static FirebaseAnalytics analytics = FirebaseAnalytics();
+  // static FirebaseAnalyticsObserver observer =
+  //     FirebaseAnalyticsObserver(analytics: analytics);
 
   RandomWordsScreen({@required this.title});
 
@@ -75,7 +75,12 @@ class RandomWordsScreen extends StatelessWidget {
               //   color: Theme.of(context).primaryColor,
               //   colorBlendMode: BlendMode.colorDodge,
               // )
-              background: _getImage(context),
+              background: Image.network(
+                _defaultImage,
+                fit: BoxFit.cover,
+                color: Theme.of(context).primaryColor,
+                colorBlendMode: BlendMode.colorDodge,
+              ),
             ),
           ),
           new SliverList(delegate: _buildSuggestionsDelete(context)),
@@ -84,19 +89,19 @@ class RandomWordsScreen extends StatelessWidget {
     );
   }
 
-  Widget _getImage(BuildContext context) {
-    return new Consumer<RemoteConfiguration>(
-      builder: (context, config, child) {
-        var headerImg = config.getHeaderImage();
-        return Image.network(
-          headerImg != null ? headerImg : _defaultImage,
-          fit: BoxFit.cover,
-          color: Theme.of(context).primaryColor,
-          colorBlendMode: BlendMode.colorDodge,
-        );
-      },
-    );
-  }
+  // Widget _getImage(BuildContext context) {
+  //   return new Consumer<RemoteConfiguration>(
+  //     builder: (context, config, child) {
+  //       var headerImg = config.getHeaderImage();
+  //       return Image.network(
+  //         headerImg != null ? headerImg : _defaultImage,
+  //         fit: BoxFit.cover,
+  //         color: Theme.of(context).primaryColor,
+  //         colorBlendMode: BlendMode.colorDodge,
+  //       );
+  //     },
+  //   );
+  // }
 
   Widget _buildTitle() {
     return Text(title);
@@ -160,36 +165,38 @@ class RandomWordsScreen extends StatelessWidget {
         var word = pair.asPascalCase;
         if (alreadySaved) {
           await savedModel.remove(word);
-          await _sendRemoveEvent(word);
+          // await _sendRemoveEvent(word);
         } else {
           await savedModel.add(word);
-          await _sendSaveEvent(word);
+          // await _sendSaveEvent(word);
         }
       },
     );
   }
 
   void _pushSaved(BuildContext context) {
-    Navigator.pushNamed(context, AppConstants.of(context).savedSuggestionRoute,
-        arguments: AnalyticsArgs(analytics, observer));
-    observer.analytics.setCurrentScreen(
-      screenName: AppConstants.of(context).savedSuggestionRoute,
+    Navigator.pushNamed(
+      context,
+      AppConstants.of(context).savedSuggestionRoute,
     );
+    // observer.analytics.setCurrentScreen(
+    //   screenName: AppConstants.of(context).savedSuggestionRoute,
+    // );
   }
 
-  Future<void> _sendSaveEvent(String word) async {
-    await analytics.logEvent(
-      name: 'save_suggestion',
-      parameters: <String, dynamic>{'word': word},
-    );
-  }
+  // Future<void> _sendSaveEvent(String word) async {
+  //   await analytics.logEvent(
+  //     name: 'save_suggestion',
+  //     parameters: <String, dynamic>{'word': word},
+  //   );
+  // }
 
-  Future<void> _sendRemoveEvent(String word) async {
-    await analytics.logEvent(
-      name: 'remove_suggestion',
-      parameters: <String, dynamic>{'word': word},
-    );
-  }
+  // Future<void> _sendRemoveEvent(String word) async {
+  //   await analytics.logEvent(
+  //     name: 'remove_suggestion',
+  //     parameters: <String, dynamic>{'word': word},
+  //   );
+  // }
 
   Future<String> _getVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

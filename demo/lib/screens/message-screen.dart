@@ -46,16 +46,15 @@ class MessageScreen extends StatelessWidget {
               message: m,
             ))
         .toList();
-    return new Padding(
-        padding: const EdgeInsets.only(top: 12.0),
-        child: new StaggeredGridView.count(
-          crossAxisCount: 4,
-          staggeredTiles: _getStaggeredTiles(messageList.length),
-          children: tiles,
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
-          padding: const EdgeInsets.all(4.0),
-        ));
+    return new Padding(padding: const EdgeInsets.only(top: 12.0)
+        // child: new StaggeredGridView.count(
+        //   crossAxisCount: 4,
+        //   staggeredTiles: _getStaggeredTiles(messageList.length),
+        //   children: tiles,
+        //   mainAxisSpacing: 4.0,
+        //   crossAxisSpacing: 4.0,
+        //   padding: const EdgeInsets.all(4.0),
+        );
   }
 
   List<StaggeredTile> _getStaggeredTiles(int count) {
@@ -63,7 +62,8 @@ class MessageScreen extends StatelessWidget {
     var rnd = Random();
     int x = 0;
     while (x < count) {
-      tiles.add(StaggeredTile.count(rnd.nextInt(3) + 1, rnd.nextInt(3) + 1));
+      tiles.add(StaggeredTile.count(
+          rnd.nextInt(3) + 1, (rnd.nextInt(3) + 1).toDouble()));
       x++;
     }
     return tiles;
