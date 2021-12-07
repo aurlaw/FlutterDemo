@@ -16,7 +16,7 @@ class RandomWordsScreen extends StatelessWidget {
   final _textStyle = const TextStyle(fontSize: 18.0);
   final String title;
   final String _defaultImage =
-      "https://assets-us-01.kc-usercontent.com/c7f41139-7a47-005e-59d5-3261d7bc8ecf/cd40fc54-760c-4190-9f1b-3d07d0870cd9/ireland_waterford_castle.jpg";
+      "https://assets-us-01.kc-usercontent.com/25c6193c-1f6d-0091-c46f-fdce9422f024/ccaff7eb-818b-4876-9061-94e2d8c97e07/DSC04651.jpg";
   // static FirebaseAnalytics analytics = FirebaseAnalytics();
   // static FirebaseAnalyticsObserver observer =
   //     FirebaseAnalyticsObserver(analytics: analytics);
